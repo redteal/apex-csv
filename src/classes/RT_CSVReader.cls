@@ -1,12 +1,12 @@
 public class RT_CSVReader implements Iterable<List<String>>, Iterator<List<String>> {
-	
+
 	private final static String COMMA = ',';
 	private final static String CR = '\r';
 	private final static String LF = '\n';
 	private final static String CRLF = '\r\n';
 	private final static String QUOTE = '"';
 	private final static String DOUBLE_QUOTE = '""';
-
+	
 	private String csvString;
 	private Integer csvStringLength;
 	private Integer position = 0;
@@ -77,14 +77,16 @@ public class RT_CSVReader implements Iterable<List<String>>, Iterator<List<Strin
 				}
 				startPos = position;
 			}
-			else if (currentValue.endsWith(QUOTE) && !currentValue.endsWith(DOUBLE_QUOTE)) {
+			else if (currentValue == DOUBLE_QUOTE) {
+				tmpValues.add('');
+				if (foundAt == nlAt) {
+					break;
+				}
+				startPos = position;
+			}
+			else if (currentValue.endsWith(QUOTE)) {
 				Integer lastIndex = currentValue.length() - 1;
-				if (currentValue.indexOf(DOUBLE_QUOTE) < 0) {
-					tmpValues.add(currentValue.substring(1, lastIndex));
-				}
-				else {
-					tmpValues.add(currentValue.substring(1, lastIndex).replace(DOUBLE_QUOTE, QUOTE));
-				}
+				tmpValues.add(currentValue.substring(1, lastIndex));
 				if (foundAt == nlAt) {
 					break;
 				}
