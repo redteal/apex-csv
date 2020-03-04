@@ -90,7 +90,7 @@ public class RT_CSVReader implements Iterable<List<String>>, Iterator<List<Strin
 				
 				//Does it contain double quoted quotes? I.e. Escaped double quotes
                 		Integer doubleQuotedQuotesIndex = currentValue.indexOf(DOUBLE_QUOTE);
-                		if(doubleQuotedQuotesIndex > 0) {
+                		if(doubleQuotedQuotesIndex >= 0) {
                     			// Replace double quoted quotes with double quotes.
                     			currentValue = currentValue.replace(DOUBLE_QUOTE, QUOTE);
                 		}
